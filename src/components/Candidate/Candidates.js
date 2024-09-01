@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useAuth } from "../../contexts/UserContext";
 import Button from "../Button";
+import CandidateDeleteButton from "./CandidateDeleteButton";
 
 export default function Candidates() {
     const { fetchAnalysis, listAnalysis } = useAuth();
@@ -13,8 +14,9 @@ export default function Candidates() {
         fetchAnalysis();
     }, []);
 
-    async function deleteAnalysis(_id) {
+    async function deleteAnalysis(_id, setIsDeleting) {
         try {
+            setIsDeleting(true);
             const {data} = await axios.delete(`/candidate/delete_analysis/${_id}`);
             // toast.success(data);
         } catch (error) {
@@ -22,6 +24,7 @@ export default function Candidates() {
             console.error(error);
         } finally {
             fetchAnalysis();
+            setIsDeleting(false);
         }
     }
 
@@ -68,7 +71,7 @@ export default function Candidates() {
                                         >
                                             Delete
                                         </button> */}
-                                        <Button btnClass="btn-error text-white" title="Delete" onClick={() => deleteAnalysis(candidate._id)}/>
+                                        <CandidateDeleteButton candidate_id={candidate._id} deleteAnalysis={deleteAnalysis}/>
                                     </td>
                                 </tr>
                             ))}
