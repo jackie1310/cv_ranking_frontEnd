@@ -11,4 +11,8 @@ export const navData = [
         link: "/matchings",
         name: "Matchings",
     },
+    {
+        link: "/analyser",
+        name: "Analyser"
+    }
 ]
